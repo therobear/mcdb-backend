@@ -1,0 +1,38 @@
+{
+    "env": {
+        "SCHEME": "http",
+        "HOST": "localhost",
+        "HOSTPORT": 3001
+    },
+    "dbConfig": {
+        "USER": "mcdb",
+        "PASSWORD": "mcdbP2ssw0rd",
+        "DATABASE": "mcdb",
+        "DATABASEHOST": "localhost",
+        "DATABASEPORT": 27017
+    },
+    "igdbConfig": {
+        "CLIENTID": "xml1bs82qq94be6aq0kj3wnkks8rle",
+        "CLIENTSECRET": "po8h1b832ur6lt98l0p9dtzg77hno5",
+        "ACCESSTOKEN": "kvqwaobxj0cmjsk9lrd8jflj7oc6uq"
+    },
+    "igdbEndpoints": {
+        "BASEURL": "https://api.igdb.com/v4",
+        "SEARCH": "search",
+        "GAMES": "games",
+        "COVERS": "covers",
+        "ARTWORKS": "artworks"
+    },
+    "mobyConfig" : {
+        "APIKEY": "moby_WSH5NHdwapJyhuMSMuzz9Zuqcwa"
+    },
+    "mobyEndpoints": {
+        "BASEURL": "https://api.mobygames.com/v1",
+        "COVERS": "covers",
+        "GAMES": "games",
+        "GENRES": "genres",
+        "GROUPS": "groups",
+        "PLATFORMS": "platforms",
+        "SCREENSHOTS": "screenshots"
+    }
+}
