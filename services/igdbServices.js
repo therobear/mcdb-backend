@@ -16,15 +16,6 @@ const headerConfig = {
     Authorization: `Bearer ${igdbConfig.ACCESSTOKEN}`,
 };
 
-/**
- * Get a game information by name
- * @route POST /igdb/searchGame
- * @produces application/json
- * @param {igdbGame.model} igdbGame.body.required - The name of the game
- * @returns {Array.<igdbResultDTO>} 200
- * @returns {Error} 400 - Bad Request
- * @returns {Error} 500 - Internal Server Error
- */
 const searchGame = async (req, res) => {
     let results = [];
     let name = req.body.name;
@@ -52,15 +43,6 @@ const searchGame = async (req, res) => {
     }
 };
 
-/**
- * Get a game information by name
- * @route POST /igdb/game/{gameid}
- * @produces application/json
- * @param {integer} gameid.path.required - The id of the game
- * @returns {object} 200
- * @returns {Error} 400 - Bad Request
- * @returns {Error} 500 - Internal Server Error
- */
 const getGame = async (req, res) => {
     const gameId = req.params.gameid;
 
@@ -77,15 +59,6 @@ const getGame = async (req, res) => {
     }
 };
 
-/**
- * Get a game cover art by the image id
- * @route POST /igdb/coverArt/{gameid}
- * @produces string
- * @param {integer} gameid.path.required - the id of the cover art image
- * @returns {String} 200 - url of the cover art
- * @returns {Error} 400 - Bad Request
- * @returns {Error} 500 - Internal Server Error
- */
 const getGameCoverArt = async (req, res) => {
     const gameId = req.params.gameid;
 

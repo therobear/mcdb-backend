@@ -10,6 +10,7 @@ const client = new MongoClient(
 /**
  * Get a list of games entered in the database
  * @route GET /games
+ * @group - MCDB
  * @produces application/json
  * @returns {Array.<object>} 200
  */

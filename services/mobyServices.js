@@ -8,6 +8,7 @@ const logger = require('../utils/logger');
 /**
  * Search for a game by name
  * @route GET /moby/searchGame
+ * @group Moby Games
  * @param {string} title.query.required = The title of the game
  * @returns {Array.<object>} 200
  * @returns {Error} 400 - Bad Request
@@ -29,6 +30,7 @@ const searchGame = async (req, res) => {
 /**
  * Get a list of Moby game genres
  * @route GET /moby/genres
+ * @group Moby Games
  * @returns {Array.<object>} 200
  * @returns {Error} 400 - Bad Request
  */
@@ -47,6 +49,7 @@ const getGenres = async (req, res) => {
 /**
  * Get a list of Moby platforms
  * @route GET /moby/platforms
+ * @group Moby Games
  * @returns {Array.<object>} 200
  * @returns {Error} 400 - Bad Request
  */
