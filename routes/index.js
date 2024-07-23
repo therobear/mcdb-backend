@@ -7,7 +7,11 @@ router.get('/games/', gamesController.getGamesList);
 
 // Moby Calls
 router.get('/moby/searchGame', mobyConrtoller.searchGame);
+router.get('/moby/searchGroup', mobyConrtoller.searchGroup);
+router.get('/moby/covers', mobyConrtoller.getCovers);
+router.get('/moby/games/:gameid', mobyConrtoller.getGame);
 router.get('/moby/genres', mobyConrtoller.getGenres);
 router.get('/moby/platforms', mobyConrtoller.getPlatforms);
+router.get('/moby/screenshots', mobyConrtoller.getScreenshots);
 
 module.exports = router;

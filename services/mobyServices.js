@@ -9,7 +9,7 @@ const logger = require('../utils/logger');
  * Search for a game by name
  * @route GET /moby/searchGame
  * @group Moby Games
- * @param {string} title.query.required = The title of the game
+ * @param {string} title.query.required - The title of the game
  * @returns {Array.<object>} 200
  * @returns {Error} 400 - Bad Request
  */
@@ -23,7 +23,85 @@ const searchGame = async (req, res) => {
             )
             .then((response) => res.status(200).send(response.data));
     } catch (err) {
-        logger.error(err.message);
+        logger.error(err.config.url);
+        logger.error(err.stack);
+        logger.error(err.response.data.error);
+        return res.status(err.response.status).send(err.response.data.error);
+    }
+};
+
+/**
+ * Search for a group by name
+ * @route GET /moby/searchGroup
+ * @group Moby Games
+ * @returns {Array.<object>} 200
+ * @returns {Error} 400 - Bad Request
+ */
+const searchGroup = async (req, res) => {
+    try {
+        await axios
+            .get(
+                `${mobyEndpoints.BASEURL}/${mobyEndpoints.GROUPS}?api_key=${mobyConfig.APIKEY}`
+            )
+            .then((response) => res.status(200).send(response.data));
+    } catch (err) {
+        logger.error(err.config.url);
+        logger.error(err.stack);
+        logger.error(err.response.data.error);
+        return res.status(err.response.status).send(err.response.data.error);
+    }
+};
+
+/**
+ * Get covers for a specific game
+ * @route GET /moby/covers
+ * @group Moby Games
+ * @param {string} gameid.query.required - The id of the game
+ * @param {string} platformid.query.required - The id of the platform
+ * @returns {Array.<object>} 200
+ * @returns {Error} 400 - Bad Request
+ */
+const getCovers = async (req, res) => {
+    const gameId = req.query.gameid;
+    const platformId = req.query.platformid;
+
+    try {
+        await axios
+            .get(
+                `${mobyEndpoints.BASEURL}/${mobyEndpoints.GAMES}/${gameId}/platforms/${platformId}/${mobyEndpoints.COVERS}?api_key=${mobyConfig.APIKEY}`
+            )
+            .then((response) => res.status(200).send(response.data));
+    } catch (err) {
+        logger.error(err.config.url);
+        logger.error(err.stack);
+        logger.error(err.response.data.error);
+        return res.status(err.response.status).send(err.response.data.error);
+    }
+};
+
+/**
+ * Get info for a game by id
+ * @route GET /moby/games/{gameid}
+ * @group Moby Games
+ * @param {string} gameid.path.required - The id of the game
+ * @returns {Array.<object>} 200
+ * @returns {Error} 400 - Bad Request
+ * @returns {Error} 404 - Not Found
+ */
+const getGame = async (req, res) => {
+    const gameId = req.params.gameid;
+
+    try {
+        await axios
+            .get(
+                `${mobyEndpoints.BASEURL}/${mobyEndpoints.GAMES}/${gameId}?api_key=${mobyConfig.APIKEY}`
+            )
+            .then((response) => res.status(200).send(response.data));
+    } catch (err) {
+        logger.error(err.config.url);
+        logger.error(err.stack);
+        logger.error(err.response.data.error);
+        return res.status(err.response.status).send(err.response.data.error);
     }
 };
 
@@ -42,7 +120,10 @@ const getGenres = async (req, res) => {
             )
             .then((response) => res.status(200).send(response.data));
     } catch (err) {
+        logger.error(err.config.url);
         logger.error(err.stack);
+        logger.error(err.response.data.error);
+        return res.status(err.response.status).send(err.response.data.error);
     }
 };
 
@@ -61,12 +142,46 @@ const getPlatforms = async (req, res) => {
             )
             .then((response) => res.status(200).send(response.data));
     } catch (err) {
+        logger.error(err.config.url);
         logger.error(err.stack);
+        logger.error(err.response.data.error);
+        return res.status(err.response.status).send(err.response.data.error);
+    }
+};
+
+/**
+ * Get screen shots for a specific game
+ * @route GET /moby/screenshots
+ * @group Moby Games
+ * @param {string} gameid.query.required - The id of the game
+ * @param {string} platformid.query.required - The id of the platform
+ * @returns {Array.<object>} 200
+ * @returns {Error} 400 - Bad Request
+ */
+const getScreenshots = async (req, res) => {
+    const gameId = req.query.gameid;
+    const platformId = req.query.platformid;
+
+    try {
+        await axios
+            .get(
+                `${mobyEndpoints.BASEURL}/${mobyEndpoints.GAMES}/${gameId}/platforms/${platformId}/${mobyEndpoints.SCREENSHOTS}?api_key=${mobyConfig.APIKEY}`
+            )
+            .then((response) => res.status(200).send(response.data));
+    } catch (err) {
+        logger.error(err.config.url);
+        logger.error(err.stack);
+        logger.error(err.response.data.error);
+        return res.status(err.response.status).send(err.response.data.error);
     }
 };
 
 module.exports = {
     searchGame,
+    searchGroup,
+    getCovers,
+    getGame,
     getGenres,
     getPlatforms,
+    getScreenshots,
 };
