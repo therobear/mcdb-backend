@@ -3,7 +3,11 @@ const router = express.Router();
 const gamesController = require('../controllers/gamesController');
 const mobyConrtoller = require('../controllers/mobyController');
 
+// MCDB Calls
 router.get('/games/', gamesController.getGamesList);
+router.post('/games', gamesController.createGame);
+router.get('/platforms', gamesController.getPlatformList);
+router.put('/platforms', gamesController.createPlatform);
 
 // Moby Calls
 router.get('/moby/searchGame', mobyConrtoller.searchGame);

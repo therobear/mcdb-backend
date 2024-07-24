@@ -9,7 +9,9 @@
         "PASSWORD": "mcdbP2ssw0rd",
         "DATABASE": "mcdb",
         "DATABASEHOST": "localhost",
-        "DATABASEPORT": 27017
+        "DATABASEPORT": 27017,
+        "GAMESCOLLECTION": "games",
+        "PLATFORMSCOLLECTION": "platforms"
     },
     "mobyConfig" : {
         "APIKEY": "moby_WSH5NHdwapJyhuMSMuzz9Zuqcwa"

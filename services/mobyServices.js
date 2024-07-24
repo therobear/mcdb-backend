@@ -5,15 +5,19 @@ const mobyEndpoints = config.mobyEndpoints;
 const axios = require('axios');
 const logger = require('../utils/logger');
 
+const MobyGameDTO = require('../models/MobyGameDTO');
+const MobyPlatform = require('../models/MobyPlatform');
+
 /**
  * Search for a game by name
  * @route GET /moby/searchGame
  * @group Moby Games
  * @param {string} title.query.required - The title of the game
- * @returns {Array.<object>} 200
+ * @returns {Array.<MobyGameDTO>} 200
  * @returns {Error} 400 - Bad Request
  */
 const searchGame = async (req, res) => {
+    const gameList = [];
     const title = req.query.title;
 
     try {
@@ -21,11 +25,30 @@ const searchGame = async (req, res) => {
             .get(
                 `${mobyEndpoints.BASEURL}/${mobyEndpoints.GAMES}?title=${title}&api_key=${mobyConfig.APIKEY}`
             )
-            .then((response) => res.status(200).send(response.data));
+            .then((response) => {
+                //res.status(200).send(response.data)
+                response.data.games.map((entry, index) => {
+                    let game = { ...entry };
+                    let screenshots = [];
+
+                    if (entry.sample_screenshots.length > 0) {
+                        entry.sample_screenshots.map((screenshot, index) => {
+                            if (screenshot.image)
+                                screenshots.push(screenshot.image);
+                        });
+                    }
+
+                    game.screenshots = screenshots;
+
+                    gameList.push(new MobyGameDTO(game));
+                });
+
+                res.status(200).send(gameList);
+            });
     } catch (err) {
-        logger.error(err.config.url);
+        logger.error(err.config?.url);
         logger.error(err.stack);
-        logger.error(err.response.data.error);
+        logger.error(err.response?.data.error);
         return res.status(err.response.status).send(err.response.data.error);
     }
 };
@@ -45,9 +68,9 @@ const searchGroup = async (req, res) => {
             )
             .then((response) => res.status(200).send(response.data));
     } catch (err) {
-        logger.error(err.config.url);
+        logger.error(err.config?.url);
         logger.error(err.stack);
-        logger.error(err.response.data.error);
+        logger.error(err.response?.data.error);
         return res.status(err.response.status).send(err.response.data.error);
     }
 };
@@ -72,9 +95,9 @@ const getCovers = async (req, res) => {
             )
             .then((response) => res.status(200).send(response.data));
     } catch (err) {
-        logger.error(err.config.url);
+        logger.error(err.config?.url);
         logger.error(err.stack);
-        logger.error(err.response.data.error);
+        logger.error(err.response?.data.error);
         return res.status(err.response.status).send(err.response.data.error);
     }
 };
@@ -98,9 +121,9 @@ const getGame = async (req, res) => {
             )
             .then((response) => res.status(200).send(response.data));
     } catch (err) {
-        logger.error(err.config.url);
+        logger.error(err.config?.url);
         logger.error(err.stack);
-        logger.error(err.response.data.error);
+        logger.error(err.response?.data.error);
         return res.status(err.response.status).send(err.response.data.error);
     }
 };
@@ -120,9 +143,9 @@ const getGenres = async (req, res) => {
             )
             .then((response) => res.status(200).send(response.data));
     } catch (err) {
-        logger.error(err.config.url);
+        logger.error(err.config?.url);
         logger.error(err.stack);
-        logger.error(err.response.data.error);
+        logger.error(err.response?.data.error);
         return res.status(err.response.status).send(err.response.data.error);
     }
 };
@@ -142,9 +165,9 @@ const getPlatforms = async (req, res) => {
             )
             .then((response) => res.status(200).send(response.data));
     } catch (err) {
-        logger.error(err.config.url);
+        logger.error(err.config?.url);
         logger.error(err.stack);
-        logger.error(err.response.data.error);
+        logger.error(err.response?.data.error);
         return res.status(err.response.status).send(err.response.data.error);
     }
 };
@@ -169,9 +192,9 @@ const getScreenshots = async (req, res) => {
             )
             .then((response) => res.status(200).send(response.data));
     } catch (err) {
-        logger.error(err.config.url);
+        logger.error(err.config?.url);
         logger.error(err.stack);
-        logger.error(err.response.data.error);
+        logger.error(err.response?.data.error);
         return res.status(err.response.status).send(err.response.data.error);
     }
 };
