@@ -8,6 +8,14 @@ const createGame = async (req, res) => {
     gamesService.createGame(req, res);
 };
 
+const updateGame = async (req, res) => {
+    gamesService.updateGame(req, res);
+};
+
+const deleteGame = async (req, res) => {
+    gamesService.deleteGame(req, res);
+};
+
 const getPlatformList = async (req, res) => {
     gamesService.getPlatformList(req, res);
 };
@@ -19,6 +27,8 @@ const createPlatform = async (req, res) => {
 module.exports = {
     getGamesList,
     createGame,
+    updateGame,
+    deleteGame,
     getPlatformList,
     createPlatform,
 };

@@ -1,9 +1,15 @@
+const mongoose = require('mongoose');
+
+const { Schema, model } = mongoose;
+
 /**
  * @typedef Platform
- * @property {integer} id
  * @property {string} name
  */
-module.exports = function Platform(platform) {
-    this.Id = platform.id;
-    this.Name = platform.platform_name;
-};
+const PlatformSchema = new Schema({
+    name: String,
+});
+
+const Platform = model('platforms', PlatformSchema);
+
+module.exports = Platform;

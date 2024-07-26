@@ -6,7 +6,6 @@ const axios = require('axios');
 const logger = require('../utils/logger');
 
 const MobyGameDTO = require('../models/MobyGameDTO');
-const MobyPlatform = require('../models/MobyPlatform');
 
 /**
  * Search for a game by name
