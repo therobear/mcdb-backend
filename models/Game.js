@@ -9,9 +9,11 @@ const { Schema, model } = mongoose;
  * @property {string} title
  * @property {string} description
  * @property {string} coverUrl
- * @property {Array.<MobyPlatform>}platforms
- * @property {Array.<string>}screenshots
- * @property {Array.<string>}ownedPlatforms
+ * @property {Array.<MobyPlatform>} platforms
+ * @property {Array.<string>} screenshots
+ * @property {Array.<string>} ownedPlatforms
+ * @property {Date} createdDate
+ * @property {Date} modifiedDate
  */
 const GameSchema = new Schema({
     title: {
@@ -38,6 +40,8 @@ const GameSchema = new Schema({
         type: [String],
         default: [],
     },
+    createdDate: Date,
+    modifiedDate: Date,
 });
 
 const Game = model('games', GameSchema);

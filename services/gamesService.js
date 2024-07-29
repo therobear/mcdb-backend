@@ -96,6 +96,7 @@ const createGame = async (req, res) => {
                         });
                     });
                 } else {
+                    game.createdDate = new Date();
                     const newGame = new Game(game);
 
                     newGame
@@ -116,13 +117,15 @@ const createGame = async (req, res) => {
 
 /**
  * Update a game information
- * @route PUT /games
+ * @route PUT /games/{gameid}
  * @group MCDB
- * @param {Game.model} game.body.required - The game you want to add
- * @returns {String} 200
+ * @param {string} gameid.path.required - The id of the game you want to update
+ * @param {Game.model} game.body.required - The game you want to update
+ * @returns {string} 200
  * @returns {Error} 400 - Bad Request
  */
 const updateGame = async (req, res) => {
+    let gameId = req.params.gameid;
     let game = req.body;
 
     try {
@@ -130,11 +133,13 @@ const updateGame = async (req, res) => {
             `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
         );
 
-        await Game.updateOne({ title: game.title }, { ...game }).then(
-            (updateData) => {
-                res.status(200).send(`${game.title} was updated.`);
-            }
-        );
+        await Game.updateOne(
+            { _id: gameId },
+            { ...game, modifiedDate: new Date() }
+        ).then((updateData) => {
+            logger.debug(updateData);
+            res.status(200).send(`${game.title} was updated.`);
+        });
     } catch (err) {
         logger.error(err);
     }
@@ -158,6 +163,7 @@ const deleteGame = async (req, res) => {
         );
 
         await Game.deleteOne({ _id: gameId }).then((response) => {
+            logger.debug(response);
             res.status(200).send('Game successfuly deleted.');
         });
     } catch (err) {
@@ -199,7 +205,7 @@ const getPlatformList = async (req, res) => {
 
 /**
  * Add a platform to the database
- * @route PUT /platforms
+ * @route POST /platforms
  * @group MCDB
  * @param {Platform.model} platform.body.required - The platform you want to add
  * @returns {String} 200
@@ -237,6 +243,61 @@ const createPlatform = async (req, res) => {
     }
 };
 
+/**
+ * Update a platform information
+ * @route PUT /platforms/{platformid}
+ * @group MCDB
+ * @param {string} platformid.path.required - The id of the platform you want to update
+ * @param {Platform.model} platform.body.required - The platform you want to update
+ * @returns {String} 200
+ * @returns {Error} 400 - Bad Request
+ */
+const updatePlatform = async (req, res) => {
+    const platformId = req.params.platformid;
+    const platform = req.body;
+
+    try {
+        mongoose.connect(
+            `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
+        );
+
+        await Platform.updateOne(
+            { _id: platformId },
+            { name: platform.name }
+        ).then((updateData) => {
+            logger.debug(updateData);
+            res.status(200).send(`${platform.name} was updated.`);
+        });
+    } catch (err) {
+        logger.error(err);
+    }
+};
+
+/**
+ * Delete a platform
+ * @route DELETE /platforms/{platformid}
+ * @group MCDB
+ * @param {string} platformid.path.required - The id of the platform you want to delete
+ * @returns {String} 200
+ * @returns {Error} 400 - Bad Request
+ */
+const deletePlatform = async (req, res) => {
+    const platformId = req.params.platformid;
+
+    try {
+        mongoose.connect(
+            `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
+        );
+
+        await Platform.deleteOne({ _id: platformId }).then((response) => {
+            logger.debug(response);
+            res.status(200).send('Platform successfuly deleted.');
+        });
+    } catch (err) {
+        logger.error(err);
+    }
+};
+
 module.exports = {
     getGamesList,
     createGame,
@@ -244,4 +305,6 @@ module.exports = {
     deleteGame,
     getPlatformList,
     createPlatform,
+    updatePlatform,
+    deletePlatform,
 };

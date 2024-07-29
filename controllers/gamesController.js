@@ -24,6 +24,14 @@ const createPlatform = async (req, res) => {
     gamesService.createPlatform(req, res);
 };
 
+const updatePlatform = async (req, res) => {
+    gamesService.updatePlatform(req, res);
+};
+
+const deletePlatform = async (req, res) => {
+    gamesService.deletePlatform(req, res);
+};
+
 module.exports = {
     getGamesList,
     createGame,
@@ -31,4 +39,6 @@ module.exports = {
     deleteGame,
     getPlatformList,
     createPlatform,
+    updatePlatform,
+    deletePlatform,
 };

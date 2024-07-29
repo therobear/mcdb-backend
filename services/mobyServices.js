@@ -25,7 +25,6 @@ const searchGame = async (req, res) => {
                 `${mobyEndpoints.BASEURL}/${mobyEndpoints.GAMES}?title=${title}&api_key=${mobyConfig.APIKEY}`
             )
             .then((response) => {
-                //res.status(200).send(response.data)
                 response.data.games.map((entry, index) => {
                     let game = { ...entry };
                     let screenshots = [];
