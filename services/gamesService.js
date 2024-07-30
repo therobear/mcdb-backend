@@ -51,6 +51,30 @@ const getGamesList = async (req, res) => {
 };
 
 /**
+ * Get a game's information
+ * @route GET /games/{gameid}
+ * @group MCDB
+ * @param {string} gameid.path.required - The id of the game
+ * @return {Game} 200
+ * @return {Error} 400
+ */
+const getGameInfo = async (req, res) => {
+    const gameId = req.params.gameid;
+
+    try {
+        mongoose.connect(
+            `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
+        );
+
+        await Game.findOne({ _id: gameId }).then((data) =>
+            res.status(200).send(data)
+        );
+    } catch (err) {
+        logger.error(err);
+    }
+};
+
+/**
  * Add a game to the database
  * @route POST /games
  * @group MCDB
@@ -204,6 +228,30 @@ const getPlatformList = async (req, res) => {
 };
 
 /**
+ * Get a platform's information
+ * @route GET /platforms/{platformid}
+ * @group MCDB
+ * @param {string} platformid.path.required - The id of the game
+ * @return {Game} 200
+ * @return {Error} 400
+ */
+const getPlatformInfo = async (req, res) => {
+    const platformId = req.params.platformid;
+
+    try {
+        mongoose.connect(
+            `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
+        );
+
+        await Platform.findOne({ _id: platformId }).then((data) =>
+            res.status(200).send(data)
+        );
+    } catch (err) {
+        logger.error(err);
+    }
+};
+
+/**
  * Add a platform to the database
  * @route POST /platforms
  * @group MCDB
@@ -300,10 +348,12 @@ const deletePlatform = async (req, res) => {
 
 module.exports = {
     getGamesList,
+    getGameInfo,
     createGame,
     updateGame,
     deleteGame,
     getPlatformList,
+    getPlatformInfo,
     createPlatform,
     updatePlatform,
     deletePlatform,

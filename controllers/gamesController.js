@@ -4,6 +4,10 @@ const getGamesList = async (req, res) => {
     gamesService.getGamesList(req, res);
 };
 
+const getGameInfo = async (req, res) => {
+    gamesService.getGameInfo(req, res);
+};
+
 const createGame = async (req, res) => {
     gamesService.createGame(req, res);
 };
@@ -20,6 +24,10 @@ const getPlatformList = async (req, res) => {
     gamesService.getPlatformList(req, res);
 };
 
+const getPlatformInfo = async (req, res) => {
+    gamesService.getPlatformInfo(req, res);
+};
+
 const createPlatform = async (req, res) => {
     gamesService.createPlatform(req, res);
 };
@@ -34,10 +42,12 @@ const deletePlatform = async (req, res) => {
 
 module.exports = {
     getGamesList,
+    getGameInfo,
     createGame,
     updateGame,
     deleteGame,
     getPlatformList,
+    getPlatformInfo,
     createPlatform,
     updatePlatform,
     deletePlatform,

@@ -5,10 +5,12 @@ const mobyConrtoller = require('../controllers/mobyController');
 
 // MCDB Calls
 router.get('/games/', gamesController.getGamesList);
+router.get('/games/:gameid', gamesController.getGameInfo);
 router.post('/games', gamesController.createGame);
 router.put('/games/:gameid', gamesController.updateGame);
 router.delete('/games/:gameid', gamesController.deleteGame);
 router.get('/platforms', gamesController.getPlatformList);
+router.get('/platforms/:platformid', gamesController.getPlatformInfo);
 router.post('/platforms', gamesController.createPlatform);
 router.put('/platforms/:platformid', gamesController.updatePlatform);
 router.delete('/platforms/:platformid', gamesController.deletePlatform);
