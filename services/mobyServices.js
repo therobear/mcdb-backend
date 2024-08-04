@@ -4,8 +4,9 @@ const mobyConfig = config.mobyConfig;
 const mobyEndpoints = config.mobyEndpoints;
 const axios = require('axios');
 const logger = require('../utils/logger');
+const models = require('../models');
 
-const MobyGameDTO = require('../models/MobyGameDTO');
+const MobyGameDTO = models.MobyGameDTO;
 
 /**
  * Search for a game by name

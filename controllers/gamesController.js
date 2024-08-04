@@ -40,6 +40,26 @@ const deletePlatform = async (req, res) => {
     gamesService.deletePlatform(req, res);
 };
 
+const getGameGenres = async (req, res) => {
+    gamesService.getGameGenres(req, res);
+};
+
+const getGameGenreInfo = async (req, res) => {
+    gamesService.getGameGenreInfo(req, res);
+};
+
+const createGameGenre = async (req, res) => {
+    gamesService.createGameGenre(req, res);
+};
+
+const updateGameGenre = async (req, res) => {
+    gamesService.updateGameGenre(req, res);
+};
+
+const deleteGameGenre = async (req, res) => {
+    gamesService.deleteGameGenre(req, res);
+};
+
 module.exports = {
     getGamesList,
     getGameInfo,
@@ -51,4 +71,9 @@ module.exports = {
     createPlatform,
     updatePlatform,
     deletePlatform,
+    getGameGenres,
+    getGameGenreInfo,
+    createGameGenre,
+    updateGameGenre,
+    deleteGameGenre,
 };

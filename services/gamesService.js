@@ -2,14 +2,16 @@ const config = require('config');
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
 const logger = require('../utils/logger');
+const models = require('../models');
 
 const dbConfig = config.dbConfig;
 const client = new MongoClient(
     `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
 );
 
-const Game = require('../models/Game');
-const Platform = require('../models/Platform');
+const Game = models.Game;
+const Platform = models.Platform;
+const GameGenre = models.GameGenre;
 
 /**
  * Get a list of games entered in the database
@@ -243,9 +245,11 @@ const getPlatformInfo = async (req, res) => {
             `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
         );
 
-        await Platform.findOne({ _id: platformId }).then((data) =>
-            res.status(200).send(data)
-        );
+        await Platform.findOne({ _id: platformId }).then((data) => {
+            data
+                ? res.status(200).send(data)
+                : res.status(200).send('Platform not found');
+        });
     } catch (err) {
         logger.error(err);
     }
@@ -346,6 +350,159 @@ const deletePlatform = async (req, res) => {
     }
 };
 
+/**
+ * Get a list of game genres entered in the database
+ * @route GET /gameGenres
+ * @group MCDB
+ * @returns {Array.<GameGenre>} 200
+ * @return {Error} 400 - Bad Reqtest
+ */
+const getGameGenres = async (req, res) => {
+    let gameGenreList = [];
+
+    try {
+        mongoose.connect(
+            `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
+        );
+
+        const options = {
+            sort: { name: 1 },
+        };
+
+        await GameGenre.find({}, null, options)
+            .exec()
+            .then((data) => {
+                if (data.length > 0) gameGenreList = data;
+                else logger.debug('No Game Genres found!');
+            });
+
+        res.status(200).send(gameGenreList);
+    } catch (err) {
+        logger.error(err);
+    }
+};
+
+/**
+ * Get the info for a game genre
+ * @route GET /gameGenres/{genreid}
+ * @group MCDB
+ * @param {string} genreid.path.required - The id of the game genre
+ * @returns {GameGenre.model} 200
+ * @returns {Error} 400 - Bad Request
+ */
+const getGameGenreInfo = async (req, res) => {
+    const genreId = req.params.genreid;
+
+    try {
+        mongoose.connect(
+            `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
+        );
+
+        await GameGenre.findOne({ _id: genreId }).then((data) => {
+            data
+                ? res.status(200).send(data)
+                : res.status(200).send('Game Genre not found');
+        });
+    } catch (err) {
+        logger.error(err);
+    }
+};
+
+/**
+ * Create a game genre entry
+ * @route POST /gameGenres
+ * @group MCDB
+ * @param {GameGenre.model} gameGenre.body.required - The game genre you want to add
+ * @returns {string} 200
+ * @returns {Error} 400 - Bad Request
+ */
+const createGameGenre = async (req, res) => {
+    let gameGenre = req.body;
+
+    try {
+        mongoose.connect(
+            `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
+        );
+
+        await GameGenre.findOne({ ...gameGenre })
+            .exec()
+            .then((data) => {
+                if (!data) {
+                    const item = new GameGenre(gameGenre);
+
+                    item.save().then((data) =>
+                        res
+                            .status(200)
+                            .send(
+                                `Game genre ${data.name} created with _id ${data._id}`
+                            )
+                    );
+                } else {
+                    res.status(401).send(
+                        `Platform ${gameGenre.name} already exists.`
+                    );
+                }
+            });
+    } catch (err) {
+        logger.error(err);
+    }
+};
+
+/**
+ * Update a game genre entry
+ * @route PUT /gameGenres/{genreid}
+ * @group MCDB
+ * @param {string} genreid.path.required - The id of the game genre you want to update
+ * @param {GameGenre.model} gameGenre.body.required - The game genre you want to update
+ * @returns {string} 200
+ * @returns {Error} 400 - Bad Request
+ */
+const updateGameGenre = async (req, res) => {
+    const genreId = req.params.genreid;
+    const gameGenre = req.body;
+
+    try {
+        mongoose.connect(
+            `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
+        );
+
+        await GameGenre.updateOne(
+            { _id: genreId },
+            { name: gameGenre.name }
+        ).then((updateData) => {
+            logger.debug(updateData);
+            res.status(200).send(`${gameGenre.name} was updated.`);
+        });
+    } catch (err) {
+        logger.error(err);
+    }
+};
+
+/**
+ * Delete a game genre entry
+ * @route DELETE /gameGenres/{genreid}
+ * @group MCDB
+ * @param {string} genreid.path.required - The id of the game genre you want to delete
+ * @returns {string} 200
+ * @returns {Error} 400 - Bad Request
+ */
+const deleteGameGenre = async (req, res) => {
+    const gameGenreId = req.params.genreid;
+
+    try {
+        mongoose.connect(
+            `mongodb://${dbConfig.USER}:${dbConfig.PASSWORD}@${dbConfig.DATABASEHOST}:${dbConfig.DATABASEPORT}/${dbConfig.DATABASE}`
+        );
+
+        await GameGenre.deleteOne({ _id: gameGenreId }).then((response) => {
+            logger.debug(response);
+            res.status(200).send('Game Genre successfuly deleted.');
+        });
+    } catch (err) {
+        logger.error(err);
+    }
+};
+
 module.exports = {
     getGamesList,
     getGameInfo,
@@ -357,4 +514,9 @@ module.exports = {
     createPlatform,
     updatePlatform,
     deletePlatform,
+    getGameGenres,
+    getGameGenreInfo,
+    createGameGenre,
+    updateGameGenre,
+    deleteGameGenre,
 };

@@ -14,6 +14,11 @@ router.get('/platforms/:platformid', gamesController.getPlatformInfo);
 router.post('/platforms', gamesController.createPlatform);
 router.put('/platforms/:platformid', gamesController.updatePlatform);
 router.delete('/platforms/:platformid', gamesController.deletePlatform);
+router.get('/gameGenres', gamesController.getGameGenres);
+router.get('/gameGenres/:genreid', gamesController.getGameGenreInfo);
+router.post('/gameGenres', gamesController.createGameGenre);
+router.put('/gameGenres/:genreid', gamesController.updateGameGenre);
+router.delete('/gameGenres/:genreid', gamesController.deleteGameGenre);
 
 // Moby Calls
 router.get('/moby/searchGame', mobyConrtoller.searchGame);
