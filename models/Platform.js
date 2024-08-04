@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 
 /**
  * @typedef Platform
- * @property {string} name
+ * @property {String} name
  */
 const PlatformSchema = new Schema({
     name: String,
