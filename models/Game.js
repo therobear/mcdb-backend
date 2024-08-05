@@ -1,5 +1,5 @@
-const Platform = require('./Platform');
 const MobyPlatform = require('./MobyPlatform');
+const GameGenre = require('./GameGenre');
 const mongoose = require('mongoose');
 
 const { Schema, model } = mongoose;
@@ -12,6 +12,7 @@ const { Schema, model } = mongoose;
  * @property {Array.<MobyPlatform>} platforms
  * @property {Array.<string>} screenshots
  * @property {Array.<string>} ownedPlatforms
+ * @property {Array.<GameGenre>} genres
  * @property {Date} createdDate
  * @property {Date} modifiedDate
  */
@@ -38,6 +39,10 @@ const GameSchema = new Schema({
     },
     ownedPlatforms: {
         type: [String],
+        default: [],
+    },
+    genres: {
+        type: [GameGenre.schema],
         default: [],
     },
     createdDate: Date,

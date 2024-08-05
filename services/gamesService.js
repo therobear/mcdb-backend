@@ -16,7 +16,7 @@ const GameGenre = models.GameGenre;
 /**
  * Get a list of games entered in the database
  * @route GET /games
- * @group - MCDB
+ * @group - MCDB Games
  * @produces application/json
  * @returns {Array.<object>} 200
  */
@@ -55,7 +55,7 @@ const getGamesList = async (req, res) => {
 /**
  * Get a game's information
  * @route GET /games/{gameid}
- * @group MCDB
+ * @group MCDB Games
  * @param {string} gameid.path.required - The id of the game
  * @return {Game} 200
  * @return {Error} 400
@@ -79,7 +79,7 @@ const getGameInfo = async (req, res) => {
 /**
  * Add a game to the database
  * @route POST /games
- * @group MCDB
+ * @group MCDB Games
  * @param {Game.model} game.body.required - The game you want to add
  * @returns {String} 200
  * @returns {Error} 400 - Bad Request
@@ -144,7 +144,7 @@ const createGame = async (req, res) => {
 /**
  * Update a game information
  * @route PUT /games/{gameid}
- * @group MCDB
+ * @group MCDB Games
  * @param {string} gameid.path.required - The id of the game you want to update
  * @param {Game.model} game.body.required - The game you want to update
  * @returns {string} 200
@@ -174,7 +174,7 @@ const updateGame = async (req, res) => {
 /**
  * Delete a game
  * @route DELETE /games/{gameid}
- * @group MCDB
+ * @group MCDB Games
  * @param {string} gameid.path.required - The id of the game you want to delete
  * @returns {string} 200
  * @returns {Error} 400 - Bad Request
@@ -200,7 +200,7 @@ const deleteGame = async (req, res) => {
 /**
  * Get a list of platforms entered in the database
  * @route GET /platforms
- * @group MCDB
+ * @group MCDB Game Platforms
  * @returns {Array.<Platform>} 200
  * @returns {Error} 400
  */
@@ -232,7 +232,7 @@ const getPlatformList = async (req, res) => {
 /**
  * Get a platform's information
  * @route GET /platforms/{platformid}
- * @group MCDB
+ * @group MCDB Game Platforms
  * @param {string} platformid.path.required - The id of the game
  * @return {Game} 200
  * @return {Error} 400
@@ -258,7 +258,7 @@ const getPlatformInfo = async (req, res) => {
 /**
  * Add a platform to the database
  * @route POST /platforms
- * @group MCDB
+ * @group MCDB Game Platforms
  * @param {Platform.model} platform.body.required - The platform you want to add
  * @returns {String} 200
  * @returns {Error} 400 - Bad Request
@@ -298,7 +298,7 @@ const createPlatform = async (req, res) => {
 /**
  * Update a platform information
  * @route PUT /platforms/{platformid}
- * @group MCDB
+ * @group MCDB Game Platforms
  * @param {string} platformid.path.required - The id of the platform you want to update
  * @param {Platform.model} platform.body.required - The platform you want to update
  * @returns {String} 200
@@ -328,7 +328,7 @@ const updatePlatform = async (req, res) => {
 /**
  * Delete a platform
  * @route DELETE /platforms/{platformid}
- * @group MCDB
+ * @group MCDB Game Platforms
  * @param {string} platformid.path.required - The id of the platform you want to delete
  * @returns {String} 200
  * @returns {Error} 400 - Bad Request
@@ -353,7 +353,7 @@ const deletePlatform = async (req, res) => {
 /**
  * Get a list of game genres entered in the database
  * @route GET /gameGenres
- * @group MCDB
+ * @group MCDB Game Genres
  * @returns {Array.<GameGenre>} 200
  * @return {Error} 400 - Bad Reqtest
  */
@@ -385,7 +385,7 @@ const getGameGenres = async (req, res) => {
 /**
  * Get the info for a game genre
  * @route GET /gameGenres/{genreid}
- * @group MCDB
+ * @group MCDB Game Genres
  * @param {string} genreid.path.required - The id of the game genre
  * @returns {GameGenre.model} 200
  * @returns {Error} 400 - Bad Request
@@ -411,7 +411,7 @@ const getGameGenreInfo = async (req, res) => {
 /**
  * Create a game genre entry
  * @route POST /gameGenres
- * @group MCDB
+ * @group MCDB Game Genres
  * @param {GameGenre.model} gameGenre.body.required - The game genre you want to add
  * @returns {string} 200
  * @returns {Error} 400 - Bad Request
@@ -451,7 +451,7 @@ const createGameGenre = async (req, res) => {
 /**
  * Update a game genre entry
  * @route PUT /gameGenres/{genreid}
- * @group MCDB
+ * @group MCDB Game Genres
  * @param {string} genreid.path.required - The id of the game genre you want to update
  * @param {GameGenre.model} gameGenre.body.required - The game genre you want to update
  * @returns {string} 200
@@ -481,7 +481,7 @@ const updateGameGenre = async (req, res) => {
 /**
  * Delete a game genre entry
  * @route DELETE /gameGenres/{genreid}
- * @group MCDB
+ * @group MCDB Game Genres
  * @param {string} genreid.path.required - The id of the game genre you want to delete
  * @returns {string} 200
  * @returns {Error} 400 - Bad Request
