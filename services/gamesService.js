@@ -315,7 +315,7 @@ const updatePlatform = async (req, res) => {
 
         await Platform.updateOne(
             { _id: platformId },
-            { name: platform.name }
+            { name: platform.name, abbreviation: platform.abbreviation }
         ).then((updateData) => {
             logger.debug(updateData);
             res.status(200).send(`${platform.name} was updated.`);
