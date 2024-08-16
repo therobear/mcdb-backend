@@ -468,7 +468,7 @@ const updateGameGenre = async (req, res) => {
 
         await GameGenre.updateOne(
             { _id: genreId },
-            { name: gameGenre.name }
+            { name: gameGenre.name, abbreviation: gameGenre.abbreviation }
         ).then((updateData) => {
             logger.debug(updateData);
             res.status(200).send(`${gameGenre.name} was updated.`);

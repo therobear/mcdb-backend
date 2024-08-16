@@ -8,8 +8,14 @@ const { Schema, model } = mongoose;
  * @property {String} abbreviation
  */
 const PlatformSchema = new Schema({
-    name: String,
-    abbreviation: String,
+    name: {
+        type: String,
+        required: true,
+    },
+    abbreviation: {
+        type: String,
+        required: true,
+    },
 });
 
 const Platform = model('platforms', PlatformSchema);
